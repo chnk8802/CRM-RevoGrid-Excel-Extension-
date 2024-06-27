@@ -1,14 +1,20 @@
 const initializeApp = () => {
   return new Promise((resolve, reject) => {
     ZOHO.embeddedApp.on("PageLoad", async function (onloadData) {
-      ZOHO.CRM.UI.Resize({height:"100%",width:"100%"}).then(function(data){
-        console.log(data);
-      });
+      reSizeWidget("100%", "100%")
       resolve(onloadData);
     });
     ZOHO.embeddedApp.init();
   });
 };
+
+const reSizeWidget = async (height, width) => {
+  try {
+    const response = await ZOHO.CRM.UI.Resize({height,width})
+  } catch (error) {
+    console("Problem occured while resizing widget. See reSizeWidget()")
+  }
+}
 
 const getData = async (entity) => {
   await initializeApp();
